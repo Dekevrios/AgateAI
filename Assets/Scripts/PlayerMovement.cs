@@ -4,24 +4,41 @@ using System.Collections.Generic;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField]
-    private float _speed;
 
     private Rigidbody rb;
+
+    [SerializeField]
+    private float _speed;
+    [SerializeField]
+    private Transform cam;
+
+    
     
 
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        HideandLockCursor();
+    }
 
+    private void HideandLockCursor()
+    {
+        
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
     private void Update()
     {
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
+        Vector3 horDirection = horizontal * cam.right;
+        Vector3 verDirection = vertical * cam.forward;
 
-        Vector3 movement = new Vector3(horizontal, 0, vertical);
+        horDirection.y = 0;
+        verDirection.y = 0;
+
+        Vector3 movement = horDirection + verDirection;
         rb.linearVelocity = movement * _speed * Time.fixedDeltaTime;
 
         Debug.Log("Horizontal: " + horizontal + ", Vertical: " + vertical);
