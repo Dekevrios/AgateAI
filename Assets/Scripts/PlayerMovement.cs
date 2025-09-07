@@ -41,7 +41,7 @@ public class PlayerMovement : MonoBehaviour
         Vector3 movement = horDirection + verDirection;
         rb.linearVelocity = movement * _speed * Time.fixedDeltaTime;
 
-        Debug.Log("Horizontal: " + horizontal + ", Vertical: " + vertical);
+        
     }
 
 }
