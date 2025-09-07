@@ -5,6 +5,10 @@ using System.Collections.Generic;
 
 public class PickableManager : MonoBehaviour
 {
+    [SerializeField]
+    private PlayerMovement player;
+
+
     private List<Pickable> pickableList = new List<Pickable>();
     void Start()
     {
@@ -26,6 +30,11 @@ public class PickableManager : MonoBehaviour
     {
         pickableList.Remove(pickable);
         Debug.Log("Pickable List: " + pickableList.Count);
+
+        if (pickable.type == PickableType.PowerUp)
+        {
+            player?.PickPowerUp();
+        }
         if (pickableList.Count <= 0)
         {
             Debug.Log("All pickables collected!");

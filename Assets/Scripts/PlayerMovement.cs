@@ -1,19 +1,50 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 
 public class PlayerMovement : MonoBehaviour
 {
 
     private Rigidbody rb;
 
+    public Action OnPowerUpStart;
+    public Action OnPowerUpEnd;
+
     [SerializeField]
     private float _speed;
     [SerializeField]
     private Transform cam;
+    [SerializeField]
+    private float powerUpDuration;
+    private Coroutine powerUpCoroutine;
 
-    
-    
+
+    public void PickPowerUp()
+    {
+        Debug.Log("Power Up Collected!");
+        if(powerUpCoroutine != null)
+        {
+            StopCoroutine(powerUpCoroutine);
+        }
+     
+
+        powerUpCoroutine = StartCoroutine(StartPowerUp());
+    }
+
+    private IEnumerator StartPowerUp()
+    {
+        if (OnPowerUpStart != null)
+        {
+            OnPowerUpStart();
+        }
+        yield return new WaitForSeconds(powerUpDuration);
+        if (OnPowerUpEnd != null)
+        {
+            OnPowerUpEnd();
+        }
+    }
+
 
 
     private void Awake()
