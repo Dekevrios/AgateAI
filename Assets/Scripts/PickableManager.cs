@@ -2,6 +2,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class PickableManager : MonoBehaviour
 {
@@ -47,6 +48,7 @@ public class PickableManager : MonoBehaviour
         if (pickableList.Count <= 0)
         {
             Debug.Log("All pickables collected!");
+            SceneManager.LoadScene("WinScene");
         }
     }
 }

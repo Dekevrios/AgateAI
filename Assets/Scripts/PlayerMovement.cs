@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System;
 using TMPro;
 
+using UnityEngine.SceneManagement;
+
 public class PlayerMovement : MonoBehaviour
 {
 
@@ -41,7 +43,8 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             health = 0;
-            Debug.Log("Game Over!");
+            SceneManager.LoadScene("LoseScreen");
+            //Debug.Log("Game Over!");
         }
 
         UpdateUI();
