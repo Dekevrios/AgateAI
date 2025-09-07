@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System;
+using TMPro;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -17,9 +18,35 @@ public class PlayerMovement : MonoBehaviour
     private Transform cam;
     [SerializeField]
     private float powerUpDuration;
+    [SerializeField]
+    public int health;
+    [SerializeField]
+    private TMP_Text healthTxt;
+    [SerializeField]
+    private Transform respawnPoint;
+
+
     private Coroutine powerUpCoroutine;
 
     private bool isPowerActive = false;
+
+    public void Dead()
+    {
+        health -= 1;
+
+        if(health > 0)
+        {
+            transform.position = respawnPoint.position;
+        }
+        else
+        {
+            health = 0;
+            Debug.Log("Game Over!");
+        }
+
+        UpdateUI();
+    }
+
     public void PickPowerUp()
     {
         Debug.Log("Power Up Collected!");
@@ -54,6 +81,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Awake()
     {
+        UpdateUI();
         rb = GetComponent<Rigidbody>();
         HideandLockCursor();
     }
@@ -89,6 +117,11 @@ public class PlayerMovement : MonoBehaviour
                 collision.gameObject.GetComponent<Enemy>().Dead();
             }
         }
+    }
+
+    private void UpdateUI()
+    {
+        healthTxt.text = "Health: " + health;
     }
 
 }

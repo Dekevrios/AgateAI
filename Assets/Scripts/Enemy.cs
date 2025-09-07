@@ -75,4 +75,15 @@ public class Enemy : MonoBehaviour
         SwitchState(patrolState);
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (currState != retreatState)
+        {
+            if (collision.gameObject.CompareTag("Player"))
+            {
+                collision.gameObject.GetComponent<PlayerMovement>().Dead();
+            }
+        }
+    }
+
 }
