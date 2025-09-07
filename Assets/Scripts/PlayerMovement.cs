@@ -19,7 +19,7 @@ public class PlayerMovement : MonoBehaviour
     private float powerUpDuration;
     private Coroutine powerUpCoroutine;
 
-
+    private bool isPowerActive = false;
     public void PickPowerUp()
     {
         Debug.Log("Power Up Collected!");
@@ -34,11 +34,16 @@ public class PlayerMovement : MonoBehaviour
 
     private IEnumerator StartPowerUp()
     {
+        isPowerActive = true;
+
         if (OnPowerUpStart != null)
         {
             OnPowerUpStart();
         }
         yield return new WaitForSeconds(powerUpDuration);
+
+        isPowerActive = false;
+
         if (OnPowerUpEnd != null)
         {
             OnPowerUpEnd();
@@ -73,6 +78,17 @@ public class PlayerMovement : MonoBehaviour
         rb.linearVelocity = movement * _speed * Time.fixedDeltaTime;
 
         
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (isPowerActive)
+        {
+            if (collision.gameObject.CompareTag("Enemy"))
+            {
+                collision.gameObject.GetComponent<Enemy>().Dead();
+            }
+        }
     }
 
 }

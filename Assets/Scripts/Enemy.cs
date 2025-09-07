@@ -34,6 +34,11 @@ public class Enemy : MonoBehaviour
         currState.EnterState(this);
     }
 
+    public void Dead()
+    {
+        Destroy(gameObject);
+    }
+
     private void Awake()
     {
         animator = GetComponent<Animator>();
