@@ -6,7 +6,7 @@ public class StateRetreat :BaseState
 {
     public void EnterState(Enemy enemy)
     {
-        
+        enemy.animator.SetTrigger("RetreatState");
     }
 
     public void ExitState(Enemy enemy)
